@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bootcamp.Migrations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9fa9384b791fc2624e450323f65551b082b7dc9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+870e0f1213e5d47f7680edd4a891bca8c68919d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bootcamp.Migrations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bootcamp.Migrations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
