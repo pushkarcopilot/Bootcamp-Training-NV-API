@@ -6,16 +6,11 @@ namespace Bootcamp.Data.Context
 {
     public class EngagementDbContext : DbContext
     {
-        public EngagementDbContext() : base()
-        {
-            //var databaseCreator = (Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator);
-            //databaseCreator.CreateTables();
-        }
-
         public EngagementDbContext(DbContextOptions<EngagementDbContext> options)
         : base(options)
         {
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //To Display the Generated the Database Script

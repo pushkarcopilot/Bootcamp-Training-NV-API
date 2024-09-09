@@ -33,7 +33,7 @@ namespace Bootcamp.Data.Migrations
 
                     b.HasKey("AuditTypeId");
 
-                    b.ToTable("AuditType");
+                    b.ToTable("AuditType", (string)null);
 
                     b.HasData(
                         new
@@ -96,7 +96,7 @@ namespace Bootcamp.Data.Migrations
 
                     b.HasIndex("EngagementStatusId");
 
-                    b.ToTable("Engagements");
+                    b.ToTable("Engagements", (string)null);
                 });
 
             modelBuilder.Entity("Bootcamp.Data.Models.EngagementStatus", b =>
@@ -110,7 +110,7 @@ namespace Bootcamp.Data.Migrations
 
                     b.HasKey("EngagementStatusId");
 
-                    b.ToTable("EngagementStatus");
+                    b.ToTable("EngagementStatus", (string)null);
 
                     b.HasData(
                         new
