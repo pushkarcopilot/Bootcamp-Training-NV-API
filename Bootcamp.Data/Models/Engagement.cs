@@ -31,7 +31,7 @@ namespace Bootcamp.Data.Models
         public List<int> Auditors { get; set; }
 
         [Required]
-        public EngagementStatusId StatusId { get; set; }
+        public EngagementStatusId EngagementStatusId { get; set; }
 
         [Required]
         public EngagementStatus EngagementStatus { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Bootcamp.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
 using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data.Context
@@ -13,15 +12,20 @@ namespace Bootcamp.Data.Context
             //databaseCreator.CreateTables();
         }
 
+        public EngagementDbContext(DbContextOptions<EngagementDbContext> options)
+        : base(options)
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //To Display the Generated the Database Script
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
 
             //Configuring the Connection String
-            optionsBuilder.UseSqlServer(
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true", 
-                                x => x.MigrationsAssembly("Bootcamp.Migrations"));
+
+            //optionsBuilder.UseSqlServer(
+            //    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true", 
+            //                    x => x.MigrationsAssembly("Bootcamp.Migrations"));
 
             //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true");
         }
@@ -40,7 +44,7 @@ namespace Bootcamp.Data.Context
 
             modelBuilder
                 .Entity<Engagement>()
-                .Property(e => e.StatusId)
+                .Property(e => e.EngagementStatusId)
                 .HasConversion<int>();
 
             modelBuilder
