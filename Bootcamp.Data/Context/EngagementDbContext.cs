@@ -5,7 +5,7 @@ using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data.Context
 {
-    internal class EngagementDbContext : DbContext
+    public class EngagementDbContext : DbContext
     {
         public EngagementDbContext() : base()
         {
@@ -19,7 +19,11 @@ namespace Bootcamp.Data.Context
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
 
             //Configuring the Connection String
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(
+                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true", 
+                                x => x.MigrationsAssembly("Bootcamp.Migrations"));
+
+            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
