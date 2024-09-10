@@ -10,7 +10,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Engagement
 
         // Replace with your connection string
         optionsBuilder.UseSqlServer(
-                        "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true",
+                        "Server=PUDHANASHRIJADH;Database=LevviaBootcamp2;Trusted_Connection=true;TrustServerCertificate=true",
                         x => x.MigrationsAssembly("Bootcamp.Migrations"));
 
         return new EngagementDbContext(optionsBuilder.Options);

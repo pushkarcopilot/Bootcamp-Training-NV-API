@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data.Models
@@ -6,6 +7,7 @@ namespace Bootcamp.Data.Models
     public class Engagement
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EngagementId { get; set; }
 
         [Required]
@@ -15,8 +17,8 @@ namespace Bootcamp.Data.Models
         [Required]
         public AuditTypeId AuditTypeId { get; set; }
 
-        [Required]
-        public AuditType AuditType { get; set; }
+        //[Required]
+        //public AuditType AuditType { get; set; }
 
         [Required]
         public DateTimeOffset AuditStartDate { get; set; }
@@ -33,7 +35,7 @@ namespace Bootcamp.Data.Models
         [Required]
         public EngagementStatusId EngagementStatusId { get; set; }
 
-        [Required]
-        public EngagementStatus EngagementStatus { get; set; }
+        //[Required]
+        //public EngagementStatus EngagementStatus { get; set; }
     }
 }

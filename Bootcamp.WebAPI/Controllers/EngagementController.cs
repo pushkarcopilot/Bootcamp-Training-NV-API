@@ -1,5 +1,8 @@
-﻿using Bootcamp.Data.Interfaces;
+﻿
+using Bootcamp.Data.Interfaces;
+using Bootcamp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.WebAPI.Controllers
@@ -15,18 +18,36 @@ namespace Bootcamp.WebAPI.Controllers
             _engagementRepository = engagementRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet]
-        [Route("Add")]
-        public string Add()
-        {
-            _engagementRepository.AddEngagement("Acme Corp", DateTime.Now, DateTime.Now.AddMonths(1), 5, new List<int>() { 1, 2, 3 }, AuditTypeId.FinancialAudit, EngagementStatusId.Assigned);
+        //[HttpGet]
+        //[Route("Add")]
+        //public string Add()
+        //{
+        //    _engagementRepository.AddEngagement("Acme Corp", DateTime.Now, DateTime.Now.AddMonths(1), 5, new List<int>() { 1, 2, 3 }, AuditTypeId.FinancialAudit, EngagementStatusId.Assigned);
 
-            return "ok";
+        //    return "ok";
+        //}
+
+        [HttpPost]
+        [Route("Create")]
+        public IActionResult CreateAsync([FromBody] Engagement data)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _engagementRepository.AddEngagement(data);
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

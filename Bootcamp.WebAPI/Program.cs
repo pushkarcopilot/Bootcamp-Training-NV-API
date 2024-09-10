@@ -14,8 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<EngagementDbContext>(options =>
     options.UseSqlServer(
-    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true",
+    "Server=PUDHANASHRIJADH;Database=LevviaBootcamp2;Trusted_Connection=true;TrustServerCertificate=true",
                     x => x.MigrationsAssembly("Bootcamp.Migrations")));
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IEngagementRepository, EngagementRepository>();
 
