@@ -2,11 +2,13 @@ using Bootcamp.Data.Context;
 using Bootcamp.Data.Interface;
 using Bootcamp.Data.Implementation;
 using Microsoft.AspNetCore.Components.Forms;
+using Bootcamp.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<Auditcontext>();
 builder.Services.AddScoped<IClientDetailsService, ClientDetailsService>();
+builder.Services.AddScoped<IAuthUser, AuthUser>();
 builder.Services.AddMemoryCache();
 // Add services to the container.
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
