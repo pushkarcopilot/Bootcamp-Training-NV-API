@@ -19,11 +19,6 @@ namespace Bootcamp.Data.Context
                 .HasConversion<int>();
 
             modelBuilder
-                .Entity<AuditType>()
-                .Property(e => e.AuditTypeId)
-                .HasConversion<int>();
-
-            modelBuilder
                 .Entity<Engagement>()
                 .Property(e => e.StatusId)
                 .HasConversion<int>();
