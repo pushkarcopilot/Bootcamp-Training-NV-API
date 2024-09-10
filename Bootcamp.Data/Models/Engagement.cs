@@ -5,35 +5,13 @@ namespace Bootcamp.Data.Models
 {
     public class Engagement
     {
-        [Key]
         public int EngagementId { get; set; }
-
-        [Required]
-        [MaxLength(255)]
-        public string ClientName { get; set; }
-
-        [Required]
-        public AuditTypeId AuditTypeId { get; set; }
-
-        [Required]
-        public AuditType AuditType { get; set; }
-
-        [Required]
+        public string? ClientName { get; set; }
+        public AuditTypeValue AuditTypeId { get; set; } // Enum for Audit Type
         public DateTimeOffset AuditStartDate { get; set; }
-
-        [Required]
         public DateTimeOffset AuditEndDate { get; set; }
-
-        [Required]
         public int CountryId { get; set; }
-
-        [Required]
-        public List<int> Auditors { get; set; }
-
-        [Required]
-        public EngagementStatusId EngagementStatusId { get; set; }
-
-        [Required]
-        public EngagementStatus EngagementStatus { get; set; }
+        public List<int>? Auditors { get; set; } // List of Auditor IDs
+        public EngagementStatusValue StatusId { get; set; } // Enum for Status
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Bootcamp.Data.Interfaces;
+using Bootcamp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using static Bootcamp.Data.Enums.Masters;
 
@@ -15,29 +16,26 @@ namespace Bootcamp.WebAPI.Controllers
             _engagementRepository = engagementRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         [Route("Add")]
         public string Add()
         {
-            _engagementRepository.AddEngagement("Acme Corp", DateTime.Now, DateTime.Now.AddMonths(1), 5, new List<int>() { 1, 2, 3 }, AuditTypeId.FinancialAudit, EngagementStatusId.Assigned);
+            _engagementRepository.AddEngagement("Acme Corp", DateTime.Now, DateTime.Now.AddMonths(1), 5, new List<int>() { 1, 2, 3 }, AuditTypeValue.FinancialAudit, EngagementStatusValue.Completed);
 
             return "ok";
         }
 
         [HttpGet]
-        [Route("GetAll")]
-        public JsonResult GetAll()
+        public async Task<ActionResult<IEnumerable<Engagement>>> GetEngagements()
         {
-            // Sample code, Please replace this using your own
+            var engagements = await _engagementRepository.GetAllEngagements();
 
-            var engagements = _engagementRepository.GetAllEngagements();
+            if (engagements == null || !engagements.Any())
+            {
+                return NotFound();
+            }
 
-            return new JsonResult(engagements);
+            return Ok(engagements);
         }
     }
 }

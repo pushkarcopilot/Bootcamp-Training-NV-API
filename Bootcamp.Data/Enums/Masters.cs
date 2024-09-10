@@ -2,12 +2,24 @@
 {
     public class Masters
     {
-        public enum AuditTypeId
+      
+        // Enum for Audit Type
+        public enum AuditTypeValue
         {
             InternalAudit,
             ExternalAudit,
-            IRSTaxAudit,
+            ComplianceAudit,
             FinancialAudit
+        }
+
+        // Enum for Engagement Status
+        public enum EngagementStatusValue
+        {
+            NotStarted,
+            InProgress,
+            Completed,
+            OnHold,
+            Cancelled
         }
 
         public enum EngagementStatusId
