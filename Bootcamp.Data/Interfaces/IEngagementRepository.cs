@@ -6,7 +6,7 @@ namespace Bootcamp.Data.Interfaces
 {
     public interface IEngagementRepository
     {
-        IQueryable<AllEngagementsResponse> GetAllEngagements();
+        Task<IEnumerable<Engagement>> GetAllEngagements();
         void AddEngagement(Engagement data);
     }
 }

@@ -13,12 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<EngagementDbContext>(options =>
-    options.UseSqlServer(
-    "Server=PUDHANASHRIJADH;Database=LevviaBootcamp2;Trusted_Connection=true;TrustServerCertificate=true",
-                    x => x.MigrationsAssembly("Bootcamp.Migrations")));
-
-builder.Services.AddAutoMapper(typeof(Program));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEngagementRepository, EngagementRepository>();
 
 var app = builder.Build();

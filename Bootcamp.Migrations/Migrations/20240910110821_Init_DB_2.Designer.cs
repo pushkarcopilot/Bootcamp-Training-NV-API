@@ -4,6 +4,7 @@ using Bootcamp.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bootcamp.Data.Migrations
 {
     [DbContext(typeof(EngagementDbContext))]
-    partial class EngagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240910110821_Init_DB_2")]
+    partial class Init_DB_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,19 @@ namespace Bootcamp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Bootcamp.Data.Models.AuditType", b =>
+                {
+                    b.Property<int>("AuditTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AuditTypeId");
+
+                    b.ToTable("AuditType");
+                });
 
             modelBuilder.Entity("Bootcamp.Data.Models.Engagement", b =>
                 {
@@ -53,7 +69,23 @@ namespace Bootcamp.Data.Migrations
 
                     b.HasKey("EngagementId");
 
+                    b.HasIndex("AuditTypeId");
+
                     b.ToTable("Engagements");
+                });
+
+            modelBuilder.Entity("Bootcamp.Data.Models.Engagement", b =>
+                {
+                    b.HasOne("Bootcamp.Data.Models.AuditType", null)
+                        .WithMany("Engagements")
+                        .HasForeignKey("AuditTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Bootcamp.Data.Models.AuditType", b =>
+                {
+                    b.Navigation("Engagements");
                 });
 #pragma warning restore 612, 618
         }
