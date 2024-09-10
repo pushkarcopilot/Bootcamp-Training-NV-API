@@ -11,20 +11,6 @@ namespace Bootcamp.Data.Context
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //To Display the Generated the Database Script
-            //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-
-            //Configuring the Connection String
-
-            //optionsBuilder.UseSqlServer(
-            //    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true", 
-            //                    x => x.MigrationsAssembly("Bootcamp.Migrations"));
-
-            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp3;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -39,35 +25,8 @@ namespace Bootcamp.Data.Context
 
             modelBuilder
                 .Entity<Engagement>()
-                .Property(e => e.EngagementStatusId)
+                .Property(e => e.StatusId)
                 .HasConversion<int>();
-
-            modelBuilder
-                .Entity<EngagementStatus>()
-                .Property(e => e.EngagementStatusId)
-                .HasConversion<int>();
-
-            modelBuilder
-                .Entity<AuditType>().HasData(
-                    Enum.GetValues(typeof(AuditTypeId))
-                        .Cast<AuditTypeId>()
-                        .Select(e => new AuditType()
-                        {
-                            AuditTypeId = e,
-                            Name = e.ToString()
-                        })
-                );
-
-            modelBuilder
-                .Entity<EngagementStatus>().HasData(
-                    Enum.GetValues(typeof(EngagementStatusId))
-                        .Cast<EngagementStatusId>()
-                        .Select(e => new EngagementStatus()
-                        {
-                            EngagementStatusId = e,
-                            Name = e.ToString()
-                        })
-                );
 
         }
 

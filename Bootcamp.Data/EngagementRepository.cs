@@ -1,6 +1,7 @@
 ﻿using Bootcamp.Data.Context;
 using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data
@@ -14,20 +15,16 @@ namespace Bootcamp.Data
             _dbContext = dbContext;
         }
 
-        public IQueryable<AllEngagementsResponse> GetAllEngagements() =>
-            from e in _dbContext.Engagements
-            select new AllEngagementsResponse
+        public async Task<IEnumerable<Engagement>> GetAllEngagements()
+        {
+            if (_dbContext.Engagements == null)
             {
-                Id = e.EngagementId,
-                ClientName = e.ClientName,
-                AuditType = e.AuditType.Name,
-                EngagementStatus = e.EngagementStatus.Name,
-                StartDate = e.AuditStartDate,
-                EndDate = e.AuditEndDate,
-                CountryId = e.CountryId
-            };
+                return null; 
+            }
 
-        public void AddEngagement(string clientName, DateTimeOffset auditStartDate, DateTimeOffset auditEndDate, int countryId, List<int> auditors, AuditTypeId auditTypeId, EngagementStatusId engagementStatusId)
+            return await _dbContext.Engagements.ToListAsync();
+        }
+        public void AddEngagement(string clientName, DateTimeOffset auditStartDate, DateTimeOffset auditEndDate, int countryId, List<int> auditors, AuditTypeValue auditTypeId, EngagementStatusValue engagementStatusId)
         {
             var newEngagement = new Engagement()
             {
@@ -37,7 +34,7 @@ namespace Bootcamp.Data
                 CountryId = countryId,
                 Auditors = auditors,
                 AuditTypeId = auditTypeId,
-                EngagementStatusId = engagementStatusId,
+                StatusId = engagementStatusId,
             };
 
             _dbContext.Engagements.Add(newEngagement);
