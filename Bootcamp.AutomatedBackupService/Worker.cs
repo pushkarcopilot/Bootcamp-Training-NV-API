@@ -27,10 +27,8 @@ namespace Bootcamp.AutomatedBackupService
 
         async Task BackupEngagements(int backupFreqHours)
         {
-            Console.WriteLine("Inside here");
-
-            using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
-            //using var timer = new PeriodicTimer(TimeSpan.FromHours(backupFreqHours));
+            //using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+            using var timer = new PeriodicTimer(TimeSpan.FromHours(backupFreqHours));
 
             while (await timer.WaitForNextTickAsync())
             {

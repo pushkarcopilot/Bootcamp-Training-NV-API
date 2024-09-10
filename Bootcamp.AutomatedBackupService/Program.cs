@@ -2,8 +2,8 @@
 using Bootcamp.Data.Context;
 using Bootcamp.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Bootcamp.AutomatedBackupService
 {
@@ -11,10 +11,15 @@ namespace Bootcamp.AutomatedBackupService
     {
         static async Task Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddDbContext<EngagementDbContext>(options =>
-                    options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootcamp2;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;MultipleActiveResultSets=true;")
-                    .LogTo(Console.WriteLine, LogLevel.Information));
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                );
 
             serviceCollection.AddScoped<IEngagementRepository, EngagementRepository>()
                 .BuildServiceProvider();
