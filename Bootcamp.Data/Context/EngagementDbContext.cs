@@ -58,6 +58,25 @@ namespace Bootcamp.Data.Context
                             Name = e.ToString()
                         })
                 );
+            modelBuilder.Entity<DocumentDetails>(entity =>
+            {
+                entity.ToTable("DocumentDetails");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.FileName)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.FileType)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.UploadedAt)
+                    .IsRequired();
+
+                entity.Property(e => e.DataContentVarbinary)
+                    .IsRequired();
+            });
         }
         public DbSet<DocumentDetails> FileRecords { get; set; }
 
