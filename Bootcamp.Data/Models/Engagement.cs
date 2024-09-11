@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿﻿using System.ComponentModel.DataAnnotations;
 using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data.Models

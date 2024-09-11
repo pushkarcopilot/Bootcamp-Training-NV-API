@@ -1,6 +1,8 @@
 using Bootcamp.Data;
 using Bootcamp.Data.Context;
+using Bootcamp.Data.Interface;
 using Bootcamp.Data.Interfaces;
+using Bootcamp.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EngagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEngagementRepository, EngagementRepository>();
+builder.Services.AddScoped<IAuthUser, AuthUser>();
 builder.Services.AddScoped<IFileUploadedRepository, FileUploadedRepository>();
 
 
