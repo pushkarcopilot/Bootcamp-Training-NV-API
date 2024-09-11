@@ -15,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EngagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEngagementRepository, EngagementRepository>();
+builder.Services.AddScoped<IFileUploadedRepository, FileUploadedRepository>();
+
 
 var app = builder.Build();
 

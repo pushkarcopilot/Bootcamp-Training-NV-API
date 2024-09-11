@@ -21,7 +21,28 @@ namespace Bootcamp.Data.Context
                 .Entity<Engagement>()
                 .Property(e => e.StatusId)
                 .HasConversion<int>();
+
+            modelBuilder.Entity<DocumentDetails>(entity =>
+            {
+                entity.ToTable("DocumentDetails");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.FileName)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.FileType)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.UploadedAt)
+                    .IsRequired();
+
+                entity.Property(e => e.DataContentVarbinary)
+                    .IsRequired();
+            });
         }
+        public DbSet<DocumentDetails> FileRecords { get; set; }
 
         public DbSet<Engagement> Engagements { get; set; }
         public DbSet<EngagementSetting> EngagementSettings { get; set; }
