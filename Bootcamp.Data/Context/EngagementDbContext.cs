@@ -26,5 +26,11 @@ namespace Bootcamp.Data.Context
         public DbSet<Engagement> Engagements { get; set; }
         public DbSet<EngagementSetting> EngagementSettings { get; set; }
         public DbSet<EngagementBackup> EngagementBackups { get; set; }
+
+
+        #region Auth and regiester Access
+        public DbSet<Users> UserList { get; set; }
+        public DbSet<AuthUser> AuthUser { get; set; }
+        #endregion
     }
 }

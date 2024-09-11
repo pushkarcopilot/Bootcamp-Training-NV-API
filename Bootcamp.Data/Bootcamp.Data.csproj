@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Folder Include="Implementation\" />
+    <Folder Include="Data\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
