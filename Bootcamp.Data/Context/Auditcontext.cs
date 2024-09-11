@@ -1,5 +1,5 @@
 ﻿using Bootcamp.Data.Models;
-using Bootcamp.Data.Models.Auth;
+using Bootcamp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -27,5 +27,6 @@ namespace Bootcamp.Data.Context
         public DbSet<LEV_Account> LEV_Accounts { get; set; }
 
         public DbSet<Users> LEV_UserList { get; set; }
+        public DbSet<AuthUser> LEV_AuthUser { get; set; }
     }
 }

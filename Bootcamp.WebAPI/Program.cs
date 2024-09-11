@@ -17,6 +17,9 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyMethod()
            .AllowAnyHeader();
 }));
+
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddControllers();
@@ -32,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("MyPolicy");
 
 app.UseHttpsRedirection();
 

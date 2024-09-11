@@ -1,7 +1,10 @@
 ﻿using Bootcamp.Data.Interface;
-using Bootcamp.Data.Models.Auth;
+using Bootcamp.Data.Models;
+using Bootcamp.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+
 
 namespace Bootcamp.WebAPI.Controllers
 {
@@ -26,6 +29,38 @@ namespace Bootcamp.WebAPI.Controllers
                 return null;
             }
             return userData;
+        }
+
+        //[HttpGet("GetAuthUsers")]
+        //public async Task<IActionResult> GetAuthUsers()
+        //{
+        //    Data.Models.AuthUser authUser = new()
+        //    {
+        //        UserNames = "tarun.jeengar@newvision-software.com,tushar.jeengar@newvision-software.com,divyansh.jain@newvision-software.com"
+        //    };
+        //    return Ok(authUser);
+        //}
+
+
+        [HttpGet("GetAuthUsers")]
+        public async Task<IActionResult> GetAuthUsers()
+        {
+            List<Users> user = _authUser.GetAuthUsers();
+            return Ok(user);
+
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Users user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            _authUser.AddData(user);
+
+            return Ok(user);
         }
     }
 }
