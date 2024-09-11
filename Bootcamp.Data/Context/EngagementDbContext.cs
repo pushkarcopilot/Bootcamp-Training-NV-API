@@ -1,5 +1,8 @@
 ﻿using Bootcamp.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.Data.Context
 {
@@ -8,6 +11,8 @@ namespace Bootcamp.Data.Context
         public EngagementDbContext(DbContextOptions<EngagementDbContext> options)
         : base(options)
         {
+            //var databaseCreator = (Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator);
+            //databaseCreator.CreateTables();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/Bootcamp.WebAPI/appsettings.json
+/Bootcamp.Data/Context/DesignTimeDbContextFactory.cs
+/Bootcamp.WebAPI/appsettings.json
