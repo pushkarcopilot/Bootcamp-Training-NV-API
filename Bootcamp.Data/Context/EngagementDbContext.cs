@@ -23,9 +23,41 @@ namespace Bootcamp.Data.Context
                 .HasConversion<int>();
 
             modelBuilder
+                .Entity<AuditType>()
+                .Property(e => e.AuditTypeId)
+                .HasConversion<int>();
+
+            modelBuilder
                 .Entity<Engagement>()
                 .Property(e => e.StatusId)
                 .HasConversion<int>();
+
+            modelBuilder
+                .Entity<EngagementStatus>()
+                .Property(e => e.EngagementStatusId)
+                .HasConversion<int>();
+
+            modelBuilder
+                .Entity<AuditType>().HasData(
+                    Enum.GetValues(typeof(AuditTypeValue))
+                        .Cast<AuditTypeValue>()
+                        .Select(e => new AuditType()
+                        {
+                            AuditTypeId = e,
+                            Name = e.ToString()
+                        })
+                );
+
+            modelBuilder
+                .Entity<EngagementStatus>().HasData(
+                    Enum.GetValues(typeof(EngagementStatusId))
+                        .Cast<EngagementStatusId>()
+                        .Select(e => new EngagementStatus()
+                        {
+                            EngagementStatusId = e,
+                            Name = e.ToString()
+                        })
+                );
         }
 
         public DbSet<Engagement> Engagements { get; set; }
