@@ -8,7 +8,7 @@ namespace Bootcamp.Data.Interfaces
     {
         Task<IEnumerable<Engagement>> GetAllEngagements();
 
-        void AddEngagement(string clientName, DateTimeOffset auditStartDate, DateTimeOffset auditEndDate, int countryId, List<int> auditors, AuditTypeValue auditTypeId, EngagementStatusValue engagementStatusId);
+        void AddEngagement(Engagement engagement);
 
         void AddBackupSettings(string backupFrequency);
 

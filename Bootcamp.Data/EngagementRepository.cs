@@ -26,20 +26,9 @@ namespace Bootcamp.Data
 
             return await _dbContext.Engagements.ToListAsync();
         }
-        public void AddEngagement(string clientName, DateTimeOffset auditStartDate, DateTimeOffset auditEndDate, int countryId, List<int> auditors, AuditTypeValue auditTypeId, EngagementStatusValue engagementStatusId)
-        {
-            var newEngagement = new Engagement()
-            {
-                ClientName = clientName,
-                AuditStartDate = auditStartDate,
-                AuditEndDate = auditEndDate,
-                CountryId = countryId,
-                Auditors = auditors,
-                AuditTypeId = auditTypeId,
-                StatusId = engagementStatusId,
-            };
-
-            _dbContext.Engagements.Add(newEngagement);
+        public void AddEngagement(Engagement engagement)
+        {           
+            _dbContext.Engagements.Add(engagement);
 
             _dbContext.SaveChanges();
         }

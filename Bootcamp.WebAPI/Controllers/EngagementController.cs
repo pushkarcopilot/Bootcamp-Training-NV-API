@@ -21,14 +21,11 @@ namespace Bootcamp.WebAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IActionResult CreateAsync([FromBody] Engagement data)
+        public IActionResult CreateAsync([FromBody] Engagement engagement)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    _engagementRepository.AddEngagement(data);
-                }
+                _engagementRepository.AddEngagement(engagement);
                 return Ok();
             }
             catch (Exception ex)
