@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bootcamp.Data\Bootcamp.Data.csproj" />
+    <ProjectReference Include="..\Bootcamp.Tests\Bootcamp.Tests.csproj" />
   </ItemGroup>
 
 </Project>
