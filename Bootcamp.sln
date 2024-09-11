@@ -8,11 +8,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp.Data", "Bootcamp.Data\Bootcamp.Data.csproj", "{EF76627F-0ED6-4485-AE17-7DB3D14D440F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp.Migrations", "Bootcamp.Migrations\Bootcamp.Migrations.csproj", "{A0DE2316-32CD-4CE9-8386-F07FDA25127F}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp.Migrations", "Bootcamp.Migrations\Bootcamp.Migrations.csproj", "{A0DE2316-32CD-4CE9-8386-F07FDA25127F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp.Tests", "Bootcamp.Tests\Bootcamp.Tests.csproj", "{688481D0-B514-4E40-9870-98676D53F017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootcamp.AutomatedBackupService", "Bootcamp.AutomatedBackupService\Bootcamp.AutomatedBackupService.csproj", "{470397DD-DB1D-4BF6-9A1F-DFBE95819B13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp.AutomatedBackupService", "Bootcamp.AutomatedBackupService\Bootcamp.AutomatedBackupService.csproj", "{470397DD-DB1D-4BF6-9A1F-DFBE95819B13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

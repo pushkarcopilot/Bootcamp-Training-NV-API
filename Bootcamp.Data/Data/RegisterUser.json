@@ -9,14 +9,6 @@
     "role": "string",
     "username": "string"
   },
-  {
-    "id": 3,
-    "role": "string",
-    "username": "string"
-  },
-  {
-    "id": 4,
-    "role": "Auditor",
-    "username": "divyansh.jain@newvision-software.com"
-  }
+ 
+ 
 ]

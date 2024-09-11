@@ -1,8 +1,13 @@
+
+using Bootcamp.Data;
 using Bootcamp.Data.Context;
-using Bootcamp.Data.Interface;
 using Bootcamp.Data.Implementation;
-using Microsoft.AspNetCore.Components.Forms;
+using Bootcamp.Data.Interface;
+using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Services;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +27,7 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
