@@ -10,4 +10,9 @@
         public DateTimeOffset EndDate { get; set; }
         public int CountryId { get; set; }
     }
+
+    public class AddBackupSettingPayload
+    {
+        public string BackupFrequency { get; set; }
+    }
 }
