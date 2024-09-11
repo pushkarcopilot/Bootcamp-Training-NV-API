@@ -58,5 +58,23 @@ namespace Bootcamp.WebAPI.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        [Route("AddBackupSetting")]
+        public string AddBackupSetting([FromBody] AddBackupSettingPayload payload)
+        {
+            try
+            {
+                _engagementRepository.AddBackupSettings(payload.BackupFrequency);
+
+                return "ok";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+                return "not okay";
+            }
+        }
     }
 }

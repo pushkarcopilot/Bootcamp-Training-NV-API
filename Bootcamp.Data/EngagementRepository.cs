@@ -53,5 +53,61 @@ namespace Bootcamp.Data
 
             _dbContext.SaveChanges();
         }
+
+        public void AddBackupSettings(string backupFrequency)
+        {
+            var existingEntity = _dbContext.EngagementSettings
+                                .SingleOrDefault(e => e.KeyName == "BackupFrequency");
+
+            if (existingEntity != null)
+            {
+                existingEntity.ValueVarChar = backupFrequency;
+            }
+            else
+            {
+                var newSetting = new EngagementSetting
+                {
+                    KeyName = "BackupFrequency",
+                    DataType = "String",
+                    ValueVarChar = backupFrequency,
+                };
+
+                _dbContext.EngagementSettings.Add(newSetting);
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+        public string? GetEngagementBackupFrequency()
+        {
+            var engagementSetting = (from e in _dbContext.EngagementSettings
+                                     where e.KeyName == "BackupFrequency"
+                                     select new
+                                     {
+                                         Value = e.ValueVarChar,
+                                     }).FirstOrDefault();
+
+            return engagementSetting?.Value;
+        }
+
+        public EngagementBackup? GetEngagementBackupById(int id)
+        {
+            return _dbContext.EngagementBackups.SingleOrDefault(e => e.EngagementId == id);
+        }
+
+        public void PerformEngagementBackup(EngagementBackup? backup, bool shouldUpdate)
+        {
+            if (shouldUpdate)
+            {
+                _dbContext.Update(backup);
+            }
+            else
+            {
+                _dbContext.Add(backup);
+            }
+
+            _dbContext.SaveChanges();
+        }
     }
 }
+

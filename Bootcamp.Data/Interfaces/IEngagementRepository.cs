@@ -9,5 +9,13 @@ namespace Bootcamp.Data.Interfaces
 
         Task<IEnumerable<Engagement>> GetEngagementById(int engagementId);
         void AddEngagement(string clientName, DateTimeOffset auditStartDate, DateTimeOffset auditEndDate, int countryId, List<int> auditors, AuditTypeValue auditTypeId, EngagementStatusValue engagementStatusId);
+
+        void AddBackupSettings(string backupFrequency);
+
+        string? GetEngagementBackupFrequency();
+
+        EngagementBackup? GetEngagementBackupById(int id);
+
+        void PerformEngagementBackup(EngagementBackup? backup, bool shouldUpdate);
     }
 }
