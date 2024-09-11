@@ -53,7 +53,7 @@ namespace Bootcamp.Data.Migrations
 
                     b.HasKey("EngagementId");
 
-                    b.ToTable("Engagements");
+                    b.ToTable("Engagements", (string)null);
                 });
 #pragma warning restore 612, 618
         }

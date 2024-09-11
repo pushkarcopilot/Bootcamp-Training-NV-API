@@ -26,11 +26,10 @@ namespace Bootcamp.Data.Context
                 .Entity<Engagement>()
                 .Property(e => e.StatusId)
                 .HasConversion<int>();
-
         }
 
         public DbSet<Engagement> Engagements { get; set; }
-        //public DbSet<EngagementSetting> EngagementSettings { get; set; }
-        //public DbSet<EngagementBackup> EngagementBackups { get; set; }
+        public DbSet<EngagementSetting> EngagementSettings { get; set; }
+        public DbSet<EngagementBackup> EngagementBackups { get; set; }
     }
 }
