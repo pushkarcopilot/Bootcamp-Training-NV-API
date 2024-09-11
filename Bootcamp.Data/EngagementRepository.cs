@@ -4,7 +4,7 @@ using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using static Bootcamp.Data.Enums.Masters;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Linq;
 
 namespace Bootcamp.Data
 {
@@ -26,8 +26,19 @@ namespace Bootcamp.Data
 
             return await _dbContext.Engagements.ToListAsync();
         }
+
+        public async Task<IEnumerable<Engagement>> GetEngagementById(int engagementId)
+        {
+            if (_dbContext.Engagements == null)
+            {
+                return null;
+            }
+
+            return await _dbContext.Engagements.Where(engagement => engagement.EngagementId == engagementId).ToListAsync();
+        }
+
         public void AddEngagement(Engagement engagement)
-        {           
+        {          
             _dbContext.Engagements.Add(engagement);
 
             _dbContext.SaveChanges();

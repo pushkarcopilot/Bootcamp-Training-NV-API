@@ -8,6 +8,7 @@ namespace Bootcamp.Data.Interfaces
     {
         Task<IEnumerable<Engagement>> GetAllEngagements();
 
+        Task<IEnumerable<Engagement>> GetEngagementById(int engagementId);
         void AddEngagement(Engagement engagement);
 
         void AddBackupSettings(string backupFrequency);

@@ -47,6 +47,27 @@ namespace Bootcamp.WebAPI.Controllers
             return Ok(engagements);
         }
 
+        [HttpGet]
+        [Route("GetEngagementByEngagementId")]
+
+        public async Task<ActionResult> GetEngagementByEngagementId(int EngagementId)
+        {
+            try
+            {
+                //var response = await _IClientDetailsService.GetClientsDetailsAsync(EngagementId);
+                var response = await _engagementRepository.GetEngagementById(EngagementId);
+                if (response == null)
+                {
+                    return NotFound();
+                }
+                return Ok(response);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         [HttpPost]
         [Route("AddBackupSetting")]
         public string AddBackupSetting([FromBody] AddBackupSettingPayload payload)
