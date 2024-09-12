@@ -3,6 +3,7 @@ using Bootcamp.Data.Context;
 using Bootcamp.Data.Interface;
 using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Services;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<EngagementDbContext>(options =>
 builder.Services.AddScoped<IEngagementRepository, EngagementRepository>();
 builder.Services.AddScoped<IAuthUser, AuthUser>();
 builder.Services.AddScoped<IFileUploadedRepository, FileUploadedRepository>();
-
+builder.Services.AddValidatorsFromAssemblyContaining<EngagementValidator>();
 
 var app = builder.Build();
 
