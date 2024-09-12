@@ -1,91 +1,82 @@
-﻿using Bootcamp.Data.Enums;
+﻿using Bootcamp.AutomatedBackupService.Interfaces;
 using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
 using System.Text;
 
 namespace Bootcamp.AutomatedBackupService
 {
-    internal class Worker
+    public class Worker : IWorker
     {
         private readonly IEngagementRepository _engagementRepository;
+        private ICustomPeriodicTimer _timer;
 
-        public Worker(IEngagementRepository engagementRepository)
+        public Worker(IEngagementRepository engagementRepository, ICustomPeriodicTimer timer)
         {
             _engagementRepository = engagementRepository;
+            _timer = timer;
         }
 
-       internal async Task StartProcess()
+        public async Task BackupEngagements()
         {
-            var backupFrequency = _engagementRepository.GetEngagementBackupFrequency();
-
-            if (backupFrequency == null) return;
-
-            int backupFreqHours = (int)(BackupFrequency)Enum.Parse(typeof(BackupFrequency), backupFrequency);
-
-            await BackupEngagements(backupFreqHours);
-        }
-
-        async Task BackupEngagements(int backupFreqHours)
-        {
-            //using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
-            using var timer = new PeriodicTimer(TimeSpan.FromHours(backupFreqHours));
-
-            while (await timer.WaitForNextTickAsync())
+            using (_timer)
             {
-                Console.WriteLine($"Code executed at: {DateTime.Now}");
-
-                try
+                while (await _timer.WaitForNextTickAsync())
                 {
-                    var engagements = await _engagementRepository.GetAllEngagements();
+                    Console.WriteLine($"Code executed at: {DateTime.Now}");
 
-                    var guid = Guid.NewGuid();
-
-                    foreach (var engagement in engagements)
+                    try
                     {
-                        var existingEntity = _engagementRepository.GetEngagementBackupById(engagement.EngagementId);
+                        var engagements = await _engagementRepository.GetAllEngagements();
 
-                        if (existingEntity != null)
+                        var guid = Guid.NewGuid();
+
+                        foreach (var engagement in engagements)
                         {
-                            Console.WriteLine($"Already Exists..., Id - {engagement.EngagementId}");
+                            var existingEntity = _engagementRepository.GetEngagementBackupById(engagement.EngagementId);
 
-                            existingEntity.Auditors = engagement.Auditors;
-                            existingEntity.AuditTypeId = (int)engagement.AuditTypeId;
-                            existingEntity.ClientName = engagement.ClientName;
-                            existingEntity.CountryId = engagement.CountryId;
-                            existingEntity.AuditEndDate = engagement.AuditEndDate;
-                            existingEntity.AuditStartDate = engagement.AuditStartDate;
-                            existingEntity.BackupId = guid.ToString();
-                            existingEntity.BackupTimestamp = DateTime.Now;
-
-                            _engagementRepository.PerformEngagementBackup(existingEntity, true);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Creating New..., Id - {engagement.EngagementId}");
-
-                            var engagementBackup = new EngagementBackup()
+                            if (existingEntity != null)
                             {
-                                Auditors = engagement.Auditors,
-                                AuditTypeId = (int)engagement.AuditTypeId,
-                                ClientName = engagement.ClientName,
-                                CountryId = engagement.CountryId,
-                                AuditEndDate = engagement.AuditEndDate,
-                                AuditStartDate = engagement.AuditStartDate,
-                                BackupId = guid.ToString(),
-                                BackupTimestamp = DateTime.Now,
-                                EngagementId = engagement.EngagementId
-                            };
+                                Console.WriteLine($"Already Exists..., Id - {engagement.EngagementId}");
 
-                            _engagementRepository.PerformEngagementBackup(engagementBackup, false);
+                                existingEntity.Auditors = engagement.Auditors;
+                                existingEntity.AuditTypeId = (int)engagement.AuditTypeId;
+                                existingEntity.ClientName = engagement.ClientName;
+                                existingEntity.CountryId = engagement.CountryId;
+                                existingEntity.AuditEndDate = engagement.AuditEndDate;
+                                existingEntity.AuditStartDate = engagement.AuditStartDate;
+                                existingEntity.BackupId = guid.ToString();
+                                existingEntity.BackupTimestamp = DateTime.Now;
+
+                                _engagementRepository.PerformEngagementBackup(existingEntity, true);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Creating New..., Id - {engagement.EngagementId}");
+
+                                var engagementBackup = new EngagementBackup()
+                                {
+                                    Auditors = engagement.Auditors,
+                                    AuditTypeId = (int)engagement.AuditTypeId,
+                                    ClientName = engagement.ClientName,
+                                    CountryId = engagement.CountryId,
+                                    AuditEndDate = engagement.AuditEndDate,
+                                    AuditStartDate = engagement.AuditStartDate,
+                                    BackupId = guid.ToString(),
+                                    BackupTimestamp = DateTime.Now,
+                                    EngagementId = engagement.EngagementId
+                                };
+
+                                _engagementRepository.PerformEngagementBackup(engagementBackup, false);
+                            }
                         }
+
+
+                        LogSuccess();
                     }
-
-
-                    LogSuccess();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex.ToString());
+                    catch (Exception ex)
+                    {
+                        LogError(ex.ToString());
+                    }
                 }
             }
         }

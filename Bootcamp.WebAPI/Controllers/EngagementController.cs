@@ -1,10 +1,8 @@
 
 using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
-using Bootcamp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Bootcamp.Data.Enums.Masters;
 
 namespace Bootcamp.WebAPI.Controllers
 {
@@ -49,7 +47,6 @@ namespace Bootcamp.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetEngagementByEngagementId")]
-
         public async Task<ActionResult> GetEngagementByEngagementId(int EngagementId)
         {
             try
@@ -74,6 +71,13 @@ namespace Bootcamp.WebAPI.Controllers
         {
             try
             {
+                string[] allowedFrequencies = ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"];
+
+                if (!allowedFrequencies.Contains(payload.BackupFrequency))
+                {
+                    throw new Exception("Provided backup frequency is not allowed");
+                }
+
                 _engagementRepository.AddBackupSettings(payload.BackupFrequency);
 
                 return "ok";
