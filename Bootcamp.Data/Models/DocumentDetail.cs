@@ -2,7 +2,7 @@
 
 namespace Bootcamp.Data.Models
 {
-    public class DocumentDetails
+    public class DocumentDetail
     {
         [Key]
         public int Id { get; set; }
