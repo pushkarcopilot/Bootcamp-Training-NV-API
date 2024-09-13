@@ -14,11 +14,11 @@ namespace Bootcamp.Data.Services
         {
             RuleFor(x => x.EngagementId).NotNull();
             RuleFor(x => x.ClientName).Cascade(CascadeMode.Stop).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.AuditTypeId).NotEmpty();
+            RuleFor(x => x.AuditTypeId).NotNull();
             RuleFor(x => x.AuditStartDate).NotEmpty();
             RuleFor(x => x.AuditEndDate).NotEmpty();
             RuleFor(x => x.Auditors).NotEmpty();
-            RuleFor(x => x.StatusId).NotEmpty();
+            RuleFor(x => x.StatusId).NotNull();
         }
     }
 }
