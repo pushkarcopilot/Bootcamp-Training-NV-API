@@ -1,7 +1,8 @@
-﻿using Bootcamp.Data.Interfaces;
+
+using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using static Bootcamp.Data.Enums.Masters;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bootcamp.WebAPI.Controllers
 {
@@ -16,13 +17,19 @@ namespace Bootcamp.WebAPI.Controllers
             _engagementRepository = engagementRepository;
         }
 
-        [HttpGet]
-        [Route("Add")]
-        public string Add()
+        [HttpPost]
+        [Route("Create")]
+        public IActionResult CreateAsync([FromBody] Engagement engagement)
         {
-            _engagementRepository.AddEngagement("Acme Corp", DateTime.Now, DateTime.Now.AddMonths(1), 5, new List<int>() { 1, 2, 3 }, AuditTypeValue.FinancialAudit, EngagementStatusValue.Completed);
-
-            return "ok";
+            try
+            {
+                _engagementRepository.AddEngagement(engagement);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -40,7 +47,6 @@ namespace Bootcamp.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetEngagementByEngagementId")]
-
         public async Task<ActionResult> GetEngagementByEngagementId(int EngagementId)
         {
             try
@@ -65,6 +71,13 @@ namespace Bootcamp.WebAPI.Controllers
         {
             try
             {
+                string[] allowedFrequencies = ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"];
+
+                if (!allowedFrequencies.Contains(payload.BackupFrequency))
+                {
+                    throw new Exception("Provided backup frequency is not allowed");
+                }
+
                 _engagementRepository.AddBackupSettings(payload.BackupFrequency);
 
                 return "ok";
