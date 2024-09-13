@@ -83,6 +83,8 @@ namespace Bootcamp.Data.Context
         public DbSet<Engagement> Engagements { get; set; }
         public DbSet<EngagementSetting> EngagementSettings { get; set; }
         public DbSet<EngagementBackup> EngagementBackups { get; set; }
+        public DbSet<EngagementStatus> EngagementStatus { get; set; }
+        public DbSet<AuditType> AuditType { get; set; }
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<Auditor> Auditors { get; set; }

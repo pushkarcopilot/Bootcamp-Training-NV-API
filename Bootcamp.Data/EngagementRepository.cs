@@ -27,6 +27,45 @@ namespace Bootcamp.Data
             return await _dbContext.Engagements.ToListAsync();
         }
 
+        public async Task<IEnumerable<Country>> GetCountries()
+        {
+            if (_dbContext.Countries == null)
+            {
+                return null;
+            }
+            
+            return await _dbContext.Countries.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Auditor>> GetAuditors()
+        {
+            if (_dbContext.Countries == null)
+            {
+                return null;
+            }
+
+            return await _dbContext.Auditors.ToListAsync();
+        }
+        public async Task<IEnumerable<EngagementStatus>> GetEngagementStatus()
+        {
+            if (_dbContext.EngagementStatus == null)
+            {
+                return null;
+            }
+
+            return await _dbContext.EngagementStatus.ToListAsync();
+        }
+
+        public async Task<IEnumerable<AuditType>> GetAuditTypes()
+        {
+            if (_dbContext.AuditType == null)
+            {
+                return null;
+            }
+
+            return await _dbContext.AuditType.ToListAsync();
+        }
+
         public async Task<IEnumerable<Engagement>> GetEngagementById(int engagementId)
         {
             if (_dbContext.Engagements == null)
