@@ -86,5 +86,35 @@ namespace Bootcamp.Tests
 
             await Assert.ThrowsAsync<Exception>(() => _controller.GetEngagementByEngagementId(engagementId));
         }
+
+        [Fact]
+        public async Task GetAllEngagements_ReturnsOk_WhenEngagementsExist()
+        {
+            var engagements = new List<Engagement>
+        {
+            new Engagement { EngagementId = 1, ClientName = "Client A" },
+            new Engagement { EngagementId = 2, ClientName = "Client B" }
+        };
+
+            _mockEngRepo.Setup(repo => repo.GetAllEngagements())
+                .ReturnsAsync(engagements);
+
+            var result = await _controller.GetEngagements();
+
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnedEngagements = Assert.IsType<List<Engagement>>(okResult.Value);
+            Assert.Equal(2, returnedEngagements.Count);
+        }
+
+        [Fact]
+        public async Task GetAllEngagements_ReturnsNotFound_WhenEngagementsListIsEmpty()
+        {
+            _mockEngRepo.Setup(repo => repo.GetAllEngagements())
+                .ReturnsAsync(new List<Engagement>());
+
+            var result = await _controller.GetEngagements();
+
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
     }
 }
