@@ -39,7 +39,7 @@ namespace Bootcamp.Data
                 var fileContent = memoryStream.ToArray();
 
                 // Create a new file record
-                var fileRecord = new DocumentDetails
+                var fileRecord = new DocumentDetail
                 {
                     FileName = Path.GetFileName(file.FileName),
                     FileType = fileExtension,
@@ -48,20 +48,20 @@ namespace Bootcamp.Data
                 };
 
                 // Save the file record to the database
-                _context.FileRecords.Add(fileRecord);
+                _context.DocumentDetails.Add(fileRecord);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<DocumentDetails> DownloadFileAsync(int id)
+        public async Task<DocumentDetail> DownloadFileAsync(int id)
         {
-            var fileRecord = await _context.FileRecords.FindAsync(id);
+            var fileRecord = await _context.DocumentDetails.FindAsync(id);
 
             if (fileRecord == null)
                 throw new Exception("File not found.");
 
             // Ensure that DataContent is of type byte[] for binary data
-            return new DocumentDetails
+            return new DocumentDetail
             {
                 Id = fileRecord.Id,
                 FileName = fileRecord.FileName,
@@ -70,10 +70,10 @@ namespace Bootcamp.Data
             };
         }
 
-        public async Task<List<DocumentDetails>> GetAllFilesAsync()
+        public async Task<List<DocumentDetail>> GetAllFilesAsync()
         {
-            var documents = await _context.FileRecords
-                .Select(d => new DocumentDetails
+            var documents = await _context.DocumentDetails
+                .Select(d => new DocumentDetail
                 {
                     Id = d.Id,
                     FileName = d.FileName,

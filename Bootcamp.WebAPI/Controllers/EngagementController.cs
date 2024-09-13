@@ -1,6 +1,8 @@
 
+using Azure.Core;
 using Bootcamp.Data.Interfaces;
 using Bootcamp.Data.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,11 +21,15 @@ namespace Bootcamp.WebAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IActionResult CreateAsync([FromBody] Engagement engagement)
+        public IActionResult CreateEngagement([FromBody] Engagement engagement, IValidator<Engagement> validator)
         {
             try
             {
-                _engagementRepository.AddEngagement(engagement);
+                var validationResult = validator.Validate(engagement);
+                if (validationResult.IsValid)
+                {
+                    _engagementRepository.AddEngagement(engagement);
+                }
                 return Ok();
             }
             catch (Exception ex)

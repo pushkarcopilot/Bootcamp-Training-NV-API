@@ -58,7 +58,7 @@ namespace Bootcamp.Data.Context
                             Name = e.ToString()
                         })
                 );
-            modelBuilder.Entity<DocumentDetails>(entity =>
+            modelBuilder.Entity<DocumentDetail>(entity =>
             {
                 entity.ToTable("DocumentDetails");
                 entity.HasKey(e => e.Id);
@@ -78,11 +78,14 @@ namespace Bootcamp.Data.Context
                     .IsRequired();
             });
         }
-        public DbSet<DocumentDetails> FileRecords { get; set; }
+        public DbSet<DocumentDetail> DocumentDetails { get; set; }
 
         public DbSet<Engagement> Engagements { get; set; }
         public DbSet<EngagementSetting> EngagementSettings { get; set; }
         public DbSet<EngagementBackup> EngagementBackups { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Auditor> Auditors { get; set; }
 
 
         #region Auth and regiester Access

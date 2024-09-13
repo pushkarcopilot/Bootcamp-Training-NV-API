@@ -4,6 +4,7 @@ using Bootcamp.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bootcamp.Data.Migrations
 {
     [DbContext(typeof(EngagementDbContext))]
-    partial class EngagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240913071308_AddDoucmentDetails")]
+    partial class AddDoucmentDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,22 +60,6 @@ namespace Bootcamp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bootcamp.Data.Models.Auditor", b =>
-                {
-                    b.Property<int>("AuditorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditorId"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AuditorId");
-
-                    b.ToTable("Auditors");
-                });
-
             modelBuilder.Entity("Bootcamp.Data.Models.AuthUser", b =>
                 {
                     b.Property<int?>("Id")
@@ -92,22 +79,6 @@ namespace Bootcamp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AuthUser");
-                });
-
-            modelBuilder.Entity("Bootcamp.Data.Models.Country", b =>
-                {
-                    b.Property<int>("CountryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CountryId");
-
-                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Bootcamp.Data.Models.DocumentDetail", b =>
