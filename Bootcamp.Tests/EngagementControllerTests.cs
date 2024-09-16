@@ -3,6 +3,8 @@ using Bootcamp.Data.Models;
 using Bootcamp.WebAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace Bootcamp.Tests
 {
@@ -10,11 +12,13 @@ namespace Bootcamp.Tests
     {
         private readonly Mock<IEngagementRepository> _mockEngRepo;
         private readonly EngagementController _controller;
+        private readonly Mock<IValidator<Engagement>> _mockValidator;
 
         public EngagementControllerTests()
         {
             _mockEngRepo = new Mock<IEngagementRepository>();
             _controller = new EngagementController(_mockEngRepo.Object);
+            _mockValidator = new Mock<IValidator<Engagement>>();
         }
 
         [Fact]
@@ -115,6 +119,57 @@ namespace Bootcamp.Tests
             var result = await _controller.GetEngagements();
 
             Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public void CreateEngagement_ReturnsOk_WhenEngagementIsValid()
+        {
+            var engagement = new Engagement { EngagementId = 1, ClientName = "Client A" };
+            var validationResult = new ValidationResult();
+            _mockValidator.Setup(v => v.Validate(engagement)).Returns(validationResult);
+
+            var result = _controller.CreateEngagement(engagement, _mockValidator.Object);
+
+            var okResult = Assert.IsType<OkResult>(result);
+            _mockEngRepo.Verify(repo => repo.AddEngagement(It.IsAny<Engagement>()), Times.Once);
+        }
+
+        [Fact]
+        public void CreateEngagement_ReturnsBadRequest_WhenEngagementIsInvalid()
+        {
+            var engagement = new Engagement { EngagementId = 0, ClientName = " " };
+            var validationResult = new ValidationResult(new[]
+            {
+            new ValidationFailure("ClientName", "Client name is required")
+            });
+            _mockValidator.Setup(v => v.Validate(engagement)).Returns(validationResult);
+
+            var result = _controller.CreateEngagement(engagement, _mockValidator.Object);
+
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+
+            var errorMessages = badRequestResult.Value as IEnumerable<ValidationFailure>;
+            Assert.NotNull(errorMessages);
+
+            Assert.Equal("Client name is required", errorMessages.First().ErrorMessage);
+            _mockEngRepo.Verify(repo => repo.AddEngagement(It.IsAny<Engagement>()), Times.Never);
+        }
+
+        [Fact]
+        public void CreateEngagement_ReturnsBadRequest_WhenExceptionIsThrown()
+        {
+            var engagement = new Engagement { EngagementId = 1, ClientName = "Client A" };
+            var validationResult = new ValidationResult();
+            _mockValidator.Setup(v => v.Validate(engagement)).Returns(validationResult);
+
+            _mockEngRepo.Setup(repo => repo.AddEngagement(It.IsAny<Engagement>()))
+                .Throws(new Exception("Database error"));
+
+            var result = _controller.CreateEngagement(engagement, _mockValidator.Object);
+
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal("Database error", badRequestResult.Value);
+            _mockEngRepo.Verify(repo => repo.AddEngagement(It.IsAny<Engagement>()), Times.Once);
         }
     }
 }
