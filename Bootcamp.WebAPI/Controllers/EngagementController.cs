@@ -27,10 +27,11 @@ namespace Bootcamp.WebAPI.Controllers
             try
             {
                 var validationResult = validator.Validate(engagement);
-                if (validationResult.IsValid)
+                if (!validationResult.IsValid)
                 {
-                    _engagementRepository.AddEngagement(engagement);
+                    return BadRequest(validationResult.Errors);
                 }
+                _engagementRepository.AddEngagement(engagement);
                 return Ok();
             }
             catch (Exception ex)
